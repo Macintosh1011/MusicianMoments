@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     private let label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Login"
+        label.text = "Log In"
         label.font = .systemFont(ofSize: 24, weight: .semibold)
         label.textColor = .white
         return label
