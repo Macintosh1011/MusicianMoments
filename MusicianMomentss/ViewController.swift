@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         emailField.layer.borderColor = UIColor.white.cgColor
         emailField.backgroundColor = .white
         emailField.leftViewMode = .always
-        emailField.leftView = UIVisualEffectView(frame: CGrect(x: 0, y:0, width: 5, height:0))
+        emailField.leftView = UIVisualEffectView(frame: CGRect(x: 0, y:0, width: 5, height:0))
         emailField.layer.cornerRadius = 10
         emailField.autocorrectionType = .no
         emailField.autocapitalizationType = .none
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         passField.layer.borderWidth = 2
         passField.textColor = .white
         passField.leftViewMode = .always
-        passField.leftView = UIVisualEffectView(frame: CGrect(x: 0, y:0, width: 5, height:0))
+        passField.leftView = UIVisualEffectView(frame: CGRect(x: 0, y:0, width: 5, height:0))
         passField.layer.sublayerTransform = CATransform3DMakeTranslation(4, 0, 0)
         passField.isSecureTextEntry = true
         passField.layer.borderColor = UIColor.white.cgColor
@@ -75,10 +75,14 @@ class ViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: .bold)
         button.layer.cornerRadius = 10
         return button
-
+    }()
+  
+    @objc private func logOutTapped() {
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor(red: 123/255, green: 16/255, blue: 32/255, alpha: 1)
         view.addSubview(label)
         view.addSubview(emailField)
@@ -94,14 +98,12 @@ class ViewController: UIViewController {
             passwordField.isHidden = true
             
             view.addSubview(signOutButton)
-            signOutButton.fram = CGRect(x: 20, y: 150, width: view.frame.size.width-40, height: 52)
-            signOutButton.addTarget(self, action: #selector(logOutTapped), for .touchUpInside)
+            signOutButton.frame = CGRect(x: 20, y: 150, width: view.frame.size.width-40, height: 52)
+            signOutButton.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
         }
     }
     
-        @objc private func logOutTapped() {
-        }
-        
+
     @objc func didTapButton() {
         
         guard let email = emailField.text, !email.isEmpty,
@@ -109,7 +111,7 @@ class ViewController: UIViewController {
             
             let alert = UIAlertController(title: "Missing Email/Password", message: "Being gay for Ayaan Khan is not cool Neel", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
+                NSLog("The \"OK\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
             
@@ -146,7 +148,7 @@ class ViewController: UIViewController {
             strongSelf.passwordField.resignFirstResponder()
         })
         
-
+        
     }
     
     
@@ -188,7 +190,9 @@ class ViewController: UIViewController {
         
     }
     
-    }
+}
+    
+    
 
 
 
