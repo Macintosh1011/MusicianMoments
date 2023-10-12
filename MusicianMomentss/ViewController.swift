@@ -26,9 +26,13 @@ class ViewController: UIViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         emailField.layer.borderWidth = 2
+        emailField.autocapitalizationType = .none
         emailField.layer.sublayerTransform = CATransform3DMakeTranslation(4, 0, 0)
         emailField.textColor = .white
         emailField.layer.borderColor = UIColor.white.cgColor
+        emailField.backgroundColor = .white
+        emailField.leftViewMode = .always
+        emailField.leftView = UIVisualEffectView(frame: CGrect(x: 0, y:0, width: 5, height:0))
         emailField.layer.cornerRadius = 10
         emailField.autocorrectionType = .no
         emailField.autocapitalizationType = .none
@@ -44,6 +48,8 @@ class ViewController: UIViewController {
         
         passField.layer.borderWidth = 2
         passField.textColor = .white
+        passField.leftViewMode = .always
+        passField.leftView = UIVisualEffectView(frame: CGrect(x: 0, y:0, width: 5, height:0))
         passField.layer.sublayerTransform = CATransform3DMakeTranslation(4, 0, 0)
         passField.isSecureTextEntry = true
         passField.layer.borderColor = UIColor.white.cgColor
@@ -60,6 +66,15 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
+    
+    private let signOutButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Log Out", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 24, weight: .bold)
+        button.layer.cornerRadius = 10
+        return button
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,9 +84,24 @@ class ViewController: UIViewController {
         view.addSubview(emailField)
         view.addSubview(passwordField)
         view.addSubview(button)
+        view.backgroundColor = .systemPurple
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
+        if FirebaseAuth.Auth.auth().currentUser !=  nil {
+            label.isHidden = true
+            button.isHidden = true
+            emailField.isHidden = true
+            passwordField.isHidden = true
+            
+            view.addSubview(signOutButton)
+            signOutButton.fram = CGRect(x: 20, y: 150, width: view.frame.size.width-40, height: 52)
+            signOutButton.addTarget(self, action: #selector(logOutTapped), for .touchUpInside)
+        }
     }
     
+        @objc private func logOutTapped() {
+        }
+        
     @objc func didTapButton() {
         
         guard let email = emailField.text, !email.isEmpty,
@@ -111,6 +141,9 @@ class ViewController: UIViewController {
             strongSelf.emailField.isHidden = true
             strongSelf.passwordField.isHidden = true
             strongSelf.button.isHidden = true
+            
+            strongSelf.emailField.resignFirstResponder()
+            strongSelf.passwordField.resignFirstResponder()
         })
         
 
