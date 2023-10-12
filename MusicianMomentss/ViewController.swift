@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         emailField.layer.sublayerTransform = CATransform3DMakeTranslation(4, 0, 0)
         emailField.textColor = .white
         emailField.layer.borderColor = UIColor.white.cgColor
-        emailField.backgroundColor = .white
+        emailField.backgroundColor = .systemPurple
         emailField.leftViewMode = .always
         emailField.leftView = UIVisualEffectView(frame: CGRect(x: 0, y:0, width: 5, height:0))
         emailField.layer.cornerRadius = 10
@@ -91,6 +91,7 @@ class ViewController: UIViewController {
         view.backgroundColor = .systemPurple
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         
+        print(FirebaseAuth.Auth.auth().currentUser?.email)
         if FirebaseAuth.Auth.auth().currentUser !=  nil {
             label.isHidden = true
             button.isHidden = true
@@ -105,6 +106,19 @@ class ViewController: UIViewController {
     
 
     @objc func didTapButton() {
+        do {
+            try FirebaseAuth.Auth.auth().signOut()
+            
+            label.isHidden = false
+            button.isHidden = false
+            emailField.isHidden = false
+            passwordField.isHidden = false
+            
+            signOutButton.removeFromSuperview()
+        }
+        catch {
+            print("An error occured")
+        }
         
         guard let email = emailField.text, !email.isEmpty,
               let password = passwordField.text, !password.isEmpty else {
